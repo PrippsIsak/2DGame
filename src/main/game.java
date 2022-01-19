@@ -10,7 +10,7 @@ public class game
         window.setResizable(false);
         window.setTitle("SkitGubbe");
 
-        gamePanel gamePanel = new gamePanel();
+        GamePanel gamePanel = new GamePanel();
         window.add(gamePanel);
 
         window.pack();
