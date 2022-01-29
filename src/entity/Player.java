@@ -1,5 +1,6 @@
 package entity;
 
+import main.CollisionDetect;
 import main.GamePanel;
 import main.KeyHandler;
 
@@ -10,30 +11,29 @@ import java.io.IOException;
 
 public class Player extends Entity
 {
-    GamePanel gp;
+    GamePanel gamePanel;
     KeyHandler keyHandler;
 
     public final int screenX;
     public final int screenY;
 
-    public  Player (GamePanel gp, KeyHandler keyHandler)
+    public  Player (GamePanel gamePanel, KeyHandler keyHandler)
     {
-        this.gp = gp;
+        this.gamePanel = gamePanel;
         this.keyHandler = keyHandler;
 
-        screenX = gp.screenWidth/2 - gp.tileSize/2;
-        screenY = gp.screenHeight/2 - gp.tileSize/2;
+        screenX = gamePanel.screenWidth/2 - gamePanel.tileSize/2;
+        screenY = gamePanel.screenHeight/2 - gamePanel.tileSize/2;
 
-        solidPart = new Rectangle(8,16,32,32);
-
+        solidPart = new Rectangle(8,16,32,32);  //48*48
 
         setDefaultValues();
         getPlayerImage();
     }
     public void setDefaultValues()
     {
-        worldX = gp.tileSize * 22;
-        worldY = gp.tileSize * 22;
+        worldX = gamePanel.tileSize * 22;
+        worldY = gamePanel.tileSize * 22;
         speed = 4;
         direction = "down";
     }
@@ -70,31 +70,6 @@ public class Player extends Entity
     {
        if(keyHandler.anyPressed)
        {
-
-           /*if(keyHandler.upPressed && keyHandler.rightPressed)
-           {
-               worldX += speed;
-               worldY -= speed;
-               direction = "right";
-           }
-           else if(keyHandler.upPressed && keyHandler.leftPressed)
-           {
-               worldX -= speed;
-               worldY -= speed;
-               direction = "left";
-           }
-           else if(keyHandler.downPressed && keyHandler.rightPressed)
-           {
-               worldY += speed;
-               worldX += speed;
-               direction = "right";
-           }
-           else if (keyHandler.downPressed && keyHandler.leftPressed)
-           {
-               worldY += speed;
-               worldX -= speed;
-               direction = "left";
-           }*/
            if(keyHandler.upPressed)
                direction = "up";
 
@@ -108,7 +83,8 @@ public class Player extends Entity
                direction = "left";
 
            collisionOn = false;
-           gp.cd.checkTile (this);
+           gamePanel.cd.checkTile (this);
+
            if(!collisionOn)
                switch (direction)
                {
@@ -159,6 +135,6 @@ public class Player extends Entity
                     image = right2;
             }
         }
-        graphics2D.drawImage(image,screenX,screenY,gp.tileSize,gp.tileSize, null);
+        graphics2D.drawImage(image,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize, null);
     }
 }

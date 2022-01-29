@@ -200,10 +200,9 @@ public class TileManager
             if(worldX + gamePanel.tileSize > gamePanel.player.worldX - gamePanel.player.screenX &&
                 worldX - gamePanel.tileSize < gamePanel.player.worldX + gamePanel.player.screenX &&
                 worldY + gamePanel.tileSize > gamePanel.player.worldY - gamePanel.player.screenY &&
-                worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY)
-            {
-                graphics2D.drawImage(tile[typeTile].image,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize,null);
-            }
+                worldY - gamePanel.tileSize < gamePanel.player.worldY + gamePanel.player.screenY) //->
+                    graphics2D.drawImage(tile[typeTile].image,screenX,screenY,gamePanel.tileSize,gamePanel.tileSize,null);
+
             worldCol++;
             if(worldCol == gamePanel.maxWorldCol)
             {
