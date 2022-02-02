@@ -17,6 +17,10 @@ public class Player extends Entity
     public final int screenX;
     public final int screenY;
 
+    public int keyAmount = 0;
+    public boolean boots = false;
+    public boolean RK = false;
+    public boolean BK = false;
     public  Player (GamePanel gamePanel, KeyHandler keyHandler)
     {
         this.gamePanel = gamePanel;
@@ -26,6 +30,8 @@ public class Player extends Entity
         screenY = gamePanel.screenHeight/2 - gamePanel.tileSize/2;
 
         solidPart = new Rectangle(8,16,32,32);  //48*48
+        solidAreaDefaultX = solidPart.x;
+        solidAreaDefaultY = solidPart.y;
 
         setDefaultValues();
         getPlayerImage();
@@ -84,6 +90,7 @@ public class Player extends Entity
 
            collisionOn = false;
            gamePanel.cd.checkTile (this);
+           interreactObject(gamePanel.cd.checkObject(this,true));
 
            if(!collisionOn)
                switch (direction)
@@ -106,6 +113,69 @@ public class Player extends Entity
        }
     }
 
+    public void interreactObject(int i)
+    {
+        if(i != 999)
+        {
+            switch (gamePanel.object[i].name)
+            {
+            case "Key" ->
+                {
+                    keyAmount++;
+                    gamePanel.object[i] = null;
+                    gamePanel.playSoundEffect(1);
+                }
+            case "Door" ->
+                {
+                    if(keyAmount == 3)
+                    {
+                        gamePanel.object[i] = null;
+                        gamePanel.playSoundEffect(2);
+                    }
+                }
+            case "Lundgrens" ->
+                {
+                    gamePanel.object[i] = null;
+                    gamePanel.playSoundEffect(4);
+
+                }
+            case "RedKey" ->
+                {
+                    RK = true;
+                    gamePanel.object[i] = null;
+                    gamePanel.playSoundEffect(1);
+                }
+            case "RedDoor"->
+                {
+                  if(RK)
+                  {
+                      gamePanel.object[i] = null;
+                      gamePanel.playSoundEffect(2);
+                  }
+                }
+            case "BlueDoor" ->
+                {
+                    if(BK)
+                    {
+                        gamePanel.object[i] = null;
+                        gamePanel.playSoundEffect(2);
+                    }
+                }
+            case "BlueKey" ->
+                {
+                    BK = true;
+                    gamePanel.object[i] = null;
+                    gamePanel.playSoundEffect(1);
+                }
+            case "Boots" ->
+                {
+                    speed += 4;
+                    gamePanel.object[i] = null;
+                    gamePanel.playSoundEffect(1);
+                }
+            }
+        }
+    }
     public  void draw(Graphics2D graphics2D)
     {
         BufferedImage image = null;

@@ -16,5 +16,6 @@ public class ObjChest extends superObject
         {
             e.printStackTrace();
         }
+        collision = true;
     }
 }
